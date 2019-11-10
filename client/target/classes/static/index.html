@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all">
+</head>
+<body>
+<div class="layui-container" style="width: 700px;height: 600px;margin-top: 0px;padding-top: 60px;">
+
+    <div style="margin-left: 460px; width: 200px;">
+        欢迎回来！&nbsp;&nbsp;&nbsp;<button class="layui-btn layui-btn-warm layui-btn-radius">退出</button>
+    </div>
+
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="order">订购</a>
+    </script>
+    <script th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+
+            table.render({
+                elem: '#test'
+                ,url:'/redirect/index'
+                ,title: '菜单列表'
+                ,cols: [
+                    [
+                        {field:'id', width:100, title: '编号', sort: true}
+                        ,{field:'name', width:200, title: '菜品'}
+                        ,{field:'price', width:100, title: '单价'}
+                        ,{field:'flavor', width:100, title: '口味'}
+                        ,{field:'tid',width:100,  title: '分类',templet:function(data){
+                            return data.type.name
+                        }
+                    }
+                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:70}
+                    ]
+                ]
+                ,page: true
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'order'){
+                    window.location.href="/order/save/"+data.id;
+                }
+            });
+        });
+    </script>
+
+</div>
+</body>
+</html>

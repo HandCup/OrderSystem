@@ -4,8 +4,7 @@ spring:
   application:
     name: client
     thymeleaf:
-        mode: HTML5
-        prefix: classpath:/template/
+        prefix: classpath:/templates/
         suffix: .html
 
 eureka:
